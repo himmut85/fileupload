@@ -1,0 +1,15 @@
+.vscode
+.git
+.cache
+
+.DS_Store
+.thumbs.db
+
+*.md
+!README*.md
+README-secret.md
+
+.quasar
+package-lock.json
+node_modules
+dist

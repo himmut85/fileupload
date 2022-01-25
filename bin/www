@@ -1,0 +1,109 @@
+#!/usr/bin/env node
+
+/**
+ * Module dependencies.
+ */
+
+var app = require('../index');
+var debug = require('debug')('sword-project:server');
+var http = require('http');
+
+/**
+ * Get port from environment and store in Express.
+ */
+
+var port = normalizePort(process.env.PORT || '8080');
+app.set('port', port);
+
+/**
+ * Create HTTP server.
+ */
+
+var server = http.createServer(app);
+
+/**
+ * Listen on provided port, on all network interfaces.
+ */
+
+server.listen(port);
+server.on('error', onError);
+server.on('listening', onListening);
+
+process.on('uncaughtException', err => {
+	console.error('PROCESS_UNCAUGHT_EXCEPTION', err.message);
+});
+
+process.on('warning', warning => {
+	console.warn('PROCESS_WARNING', warning.message);
+});
+
+process.on('message', m => {
+	if (m === 'shutdown') {
+		console.warn('SERVICE_STOP', `Service is stopping with message ${m}`);
+		process.exit();
+	}
+});
+
+process.on('beforeExit', code => {
+	console.warn('PROCESS_EXIT', `EXIT_CODE: ${code}`);
+});
+
+/**
+ * Normalize a port into a number, string, or false.
+ */
+
+function normalizePort (val) {
+	var port = parseInt(val, 10);
+
+	if (isNaN(port)) {
+		// named pipe
+		return val;
+	}
+
+	if (port >= 0) {
+		// port number
+		return port;
+	}
+
+	return false;
+}
+
+/**
+ * Event listener for HTTP server "error" event.
+ */
+
+function onError (error) {
+	if (error.syscall !== 'listen') {
+		throw error;
+	}
+
+	var bind = typeof port === 'string'
+		? 'Pipe ' + port
+		: 'Port ' + port;
+
+	// handle specific listen errors with friendly messages
+	switch (error.code) {
+		case 'EACCES':
+			console.error(bind + ' requires elevated privileges');
+			process.exit(1);
+			break;
+		case 'EADDRINUSE':
+			console.error(bind + ' is already in use');
+			process.exit(1);
+			break;
+		default:
+			throw error;
+	}
+}
+
+/**
+ * Event listener for HTTP server "listening" event.
+ */
+
+function onListening () {
+	var addr = server.address();
+	var bind = typeof addr === 'string'
+		? 'pipe ' + addr
+		: 'port ' + addr.port;
+	debug('Listening on ' + bind);
+}

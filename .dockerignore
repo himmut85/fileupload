@@ -1,0 +1,14 @@
+.vscode
+.git
+.cache
+
+.DS_Store
+.thumbs.db
+
+*.md
+!README*.md
+README-secret.md
+
+tmp
+package-lock.json
+node_modules
