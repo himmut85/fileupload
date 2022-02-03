@@ -10,7 +10,7 @@ WORKDIR /app
 
 ENV NODE_ENV=production
 ENV PORT=8080
-ENV GOOGLE_APPLICATION_CREDENTIALS=./google-storage-api.json
+#ENV GOOGLE_APPLICATION_CREDENTIALS=./google-storage-api.json
 
 EXPOSE 8080
 
