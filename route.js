@@ -152,7 +152,7 @@ router.post('/upload', async (req, res) => {
     try {
         const stderr = !!req.query['stderr'];
         const fileName = req.headers['file-name'];
-        const tenantId = 'vrs-fileupload-test';
+        const tenantId = 'vrs-file-upload';
         const fileId = uuidv4();
         const filePath = fileId;
 
